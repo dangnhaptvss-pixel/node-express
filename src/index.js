@@ -1,16 +1,18 @@
-import http from "http";
-import { config } from "dotenv";
-import app from "./app.js";
-import * as logger from "./utils/logger.js";
+import express from "express";
 
-if (process.env.NODE_ENV !== "production") {
-	config();
-}
-const server = http.createServer(app);
+const app = express();
+app.use(express.json());
 
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 3000;
 
-server.listen(PORT, () => {
-	logger.info(`Server listening at http://localhost:${PORT}`);
-	logger.info(`Access the root route at http://localhost:${PORT}/hello`);
+app.post("/chat", async (req, res) => {
+  const userMessage = req.body.message;
+
+  const reply = "hmm… anh hỏi vậy là đang nhớ em đó hả? 😏";
+
+  res.json({ reply });
+});
+
+app.listen(PORT, () => {
+  console.log("Server running");
 });
